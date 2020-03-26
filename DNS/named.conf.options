@@ -1,1 +1,7 @@
-
+//Forward vers les DNS googles
+options {
+	forwarders {
+	 	8.8.8.8;
+	 	8.8.4.4;
+	};
+};
