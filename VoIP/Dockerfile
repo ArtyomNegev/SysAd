@@ -1,6 +1,23 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y asterisk
+RUN apt update -y && apt upgrade -y &&  \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential wget libssl-dev libncurses5-dev nano \
+    libnewt-dev libxml2-dev uuid-dev \
+    libsqlite3-dev libjansson-dev  \
+    subversion && \
+    wget http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-17-current.tar.gz && \
+    tar -xzvf asterisk-17-current.tar.gz &&  \
+    cd asterisk-17.*/  && \
+    ./contrib/scripts/get_mp3_source.sh && \
+    ./configure && \
+    make menuselect.makeopts && \
+    menuselect/menuselect \
+    --enable CORE-SOUNDS-FR-ULAW \
+    --enable MOH-OPSOUND-ULAW \
+    --enable EXTRA-SOUNDS-FR-ULAW \
+    menuselect.makeopts && \
+    make && make install  && make samples && make config && \
+    apt-get clean
 
 RUN sed -i "s/rtpstart=10000/rtpstart=16384/g" /etc/asterisk/rtp.conf
 RUN sed -i "s/rtpend=20000/rtpend=16394/g" /etc/asterisk/rtp.conf
