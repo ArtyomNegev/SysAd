@@ -4,7 +4,8 @@ RUN apt update -y && apt upgrade -y &&  \
     DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential wget libssl-dev libncurses5-dev nano \
     libnewt-dev libxml2-dev uuid-dev \
     libsqlite3-dev libjansson-dev  \
-    subversion && \
+    subversion \
+    libedit-dev libedit2 && \
     wget http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-16-current.tar.gz && \
     tar -xzvf asterisk-16-current.tar.gz &&  \
     cd asterisk-16.*/  && \
