@@ -32,5 +32,4 @@ COPY iax.conf /etc/asterisk/iax.conf
 EXPOSE 5060/udp
 EXPOSE 16384-16394/udp
 
-# execute asterisk en tache de fond
 CMD ["/usr/sbin/asterisk", "-f"]
