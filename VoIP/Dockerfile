@@ -33,4 +33,4 @@ EXPOSE 5060/udp
 EXPOSE 16384-16394/udp
 
 # execute asterisk en tache de fond
-CMD asterisk -fvvvvvvvvvr
+CMD ["/usr/sbin/asterisk", "-f"]
