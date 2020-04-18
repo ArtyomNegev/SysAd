@@ -1,5 +1,6 @@
 //Forward vers les DNS googles
 options {
+	directory "/var/cache/bind";
 	forwarders {
 	 	8.8.8.8;
 	 	8.8.4.4;
