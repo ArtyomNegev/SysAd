@@ -18,6 +18,6 @@ COPY WT_Public/WT_Public.html /var/www/wt1-3.ephec-ti.be/index.html
 COPY WT_B2B/WT_B2B.html /var/www/b2b.wt1-3.ephec-ti.be/index.html
 COPY WT_Intranet/WT_Intranet.html /var/www/intranet.wt1-3.ephec-ti.be/index.html
 
-EXPOSE 80 443
+EXPOSE 80
 
 CMD apachectl -DFOREGROUND
