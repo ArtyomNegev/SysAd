@@ -1,25 +1,25 @@
 //access control list : définit des groupes d'hôtes qui sont autorisés à accéder au DNS.
 acl ip_interne { 
-  51.178.40.161;
-  localhost;
+	51.178.40.161;
+	localhost;
 };
 
 //Reseau interne
 view internal {
 	match-clients { ip_interne; };
-    recursion yes;
-    allow-recursion { ip_interne; };
-    zone "wt1-3.ephec-ti.be" {
-        type master;
-        file "/etc/bind/db.internal.wt1-3.ephec-ti.be";
-    };
+	recursion yes;
+	allow-recursion { ip_interne; };
+	zone "wt1-3.ephec-ti.be" {
+		type master;
+		file "/etc/bind/db.internal.wt1-3.ephec-ti.be";
+	};
 };
 
 //Reseau externe
 view external {
-    match-clients { any; };
-    zone "wt1-3.ephec-ti.be" {
-        type master;
-        file "/etc/bind/db.wt1-3.ephec-ti.be";
-    };
+	match-clients { any; };
+	zone "wt1-3.ephec-ti.be" {
+		type master;
+		file "/etc/bind/db.wt1-3.ephec-ti.be";
+	};
 };
