@@ -5,9 +5,9 @@ RUN apt update -y && apt upgrade -y &&  \
     libnewt-dev libxml2-dev uuid-dev \
     libsqlite3-dev libjansson-dev  \
     subversion && \
-    wget http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-15-current.tar.gz && \
-    tar -xzvf asterisk-15-current.tar.gz &&  \
-    cd asterisk-15.*/  && \
+    wget http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-17-current.tar.gz && \
+    tar -xzvf asterisk-17-current.tar.gz &&  \
+    cd asterisk-17.*/  && \
     ./contrib/scripts/get_mp3_source.sh && \
     ./configure && \
     make menuselect.makeopts && \
