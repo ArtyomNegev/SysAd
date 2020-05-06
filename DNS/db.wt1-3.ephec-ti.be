@@ -15,3 +15,6 @@ ns.wt1-3.ephec-ti.be.   IN      A   51.178.40.161
 www.wt1-3.ephec-ti.be.  IN      A   51.178.40.161
 b2b.wt1-3.ephec-ti.be.  IN      A   51.178.40.161
 intranet.wt1-3.ephec-ti.be.  IN      A   51.178.40.161
+sip				IN	A	51.178.40.161
+_sip._udp		SRV	0	0	5060	sip
+_sip._tcp		SRV 0	0	5060	sip
