@@ -20,11 +20,11 @@ RUN apt update -y && apt upgrade -y &&  \
     make && make install  && make samples && make config && \
     apt-get clean
     
-COPY voip/extensions.conf /etc/asterisk/extensions.conf
-COPY voip/sip.conf /etc/asterisk/sip.conf
-COPY voip/users.conf /etc/asterisk/users.conf
-COPY voip/voicemail.conf /etc/asterisk/voicemail.conf
-COPY voip/iax.conf /etc/asterisk/iax.conf
+COPY extensions.conf /etc/asterisk/extensions.conf
+COPY sip.conf /etc/asterisk/sip.conf
+COPY users.conf /etc/asterisk/users.conf
+COPY voicemail.conf /etc/asterisk/voicemail.conf
+COPY iax.conf /etc/asterisk/iax.conf
 
 EXPOSE 5060/udp
 EXPOSE 10000-20000/udp
