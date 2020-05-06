@@ -1,4 +1,5 @@
 //access control list : définit des groupes d'hôtes qui sont autorisés à accéder au DNS.
+//any pour les tests
 acl ip_interne { 
 	any;
 };
