@@ -12,3 +12,5 @@ COPY db.wt1-3.ephec-ti.be /etc/bind/
 EXPOSE 53
 
 CMD named -g
+
+#sudo docker run -d --name dns -h dns-container --net=host artyomnegev/sysad2020_dns:1.2
