@@ -7,3 +7,5 @@ apt-get install net-tools -y && \
 apt-get install lynx -y
 
 CMD named -g
+
+#sudo docker run -d --name monitoring -h monitoring-container --net=host artyomnegev/sysad2020_monitoring:1.2
