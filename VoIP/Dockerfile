@@ -25,3 +25,5 @@ EXPOSE 16393/udp
 EXPOSE 16394/udp
 
 CMD ["/usr/sbin/asterisk", "-f"]
+
+#sudo docker run -d --name voip -h voip-container --net=host artyomnegev/sysad2020_voip:1.2
