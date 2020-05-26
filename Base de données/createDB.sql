@@ -5,7 +5,6 @@ CREATE TABLE Clients
 (
 id_Client char(4) not null,
 nom  varchar(12) not null,
-adress varchar(20) not null,
 localite varchar(12) not null,
 compte decimal(9,2) not null,
 primary key (id_Client)
@@ -43,7 +42,6 @@ CREATE TABLE Employes
 (
 id_Employe char(4) not null,
 nom varchar(25) NOT NULL,
-adresse TEXT NOT NULL,
 localite varchar(12) not null,
 dateEngage DATETIME NOT NULL,
 actif BIT NOT NULL DEFAULT 1,
