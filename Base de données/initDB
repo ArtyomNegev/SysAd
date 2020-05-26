@@ -1,0 +1,11 @@
+# Initialise la base de donnée MySQL.
+service mysql start
+
+# Ajouter un mot de passe root
+mysql -u root --password=TQ92aT9pt
+
+# Crée une base de donnée par défaut à partir du fichier ajouté via le Dockerfile
+mysql -u root --password=TQ92aT9pt < /tmp/uneDB.sql
+
+# Shutdown le demon MySQL.
+mysqladmin -u root --password=TQ92aT9pt shutdown
