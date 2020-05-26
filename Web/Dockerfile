@@ -21,3 +21,5 @@ COPY WT_Intranet/WT_Intranet.html /var/www/intranet.wt1-3.ephec-ti.be/index.html
 EXPOSE 80
 
 CMD apachectl -DFOREGROUND
+
+#sudo docker run -d --name web -h web-container --net=host artyomnegev/sysad2020_web:1.2
