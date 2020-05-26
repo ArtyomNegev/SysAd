@@ -1,5 +1,7 @@
+# Téléchargement image de base ubuntu
 FROM ubuntu:latest
 
+# Mise à jour du container
 RUN apt-get update && apt upgrade -y 
 
 #Setup du mot de passe root
@@ -7,7 +9,21 @@ RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/r
 RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password TQ92aT9pt'"]
 
 #Installation de mysql
-RUN apt install -y mysql-server nano
+RUN apt-get install -y mysql-server
+
+# Copie les fichiers de la base de données de base
+ADD initdb createdb.sql insertdb.sql /tmp/
+
+# Modifie les fichier pour leur donner le droit d'exécution 
+RUN chmod u+x /tmp/initdb
+
+# initdb crée la base de donnée par défaut
+# à partir de createdb.sql et insertdb.sql
+# Et lance le démon mysql
+RUN /tmp/initdb
+
+#Pour changer la configuration et rendre plus rapide la recherche 
+COPY mysqld.cnf /etc/mysql/mysql.conf.d/
 
 # Le port 3306 est celui pour mysql
 EXPOSE 3306
