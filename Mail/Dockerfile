@@ -1,3 +1,5 @@
+FROM debian:stretch
+
 # Installation
 RUN apt-get update && apt-get upgrade -y
 
