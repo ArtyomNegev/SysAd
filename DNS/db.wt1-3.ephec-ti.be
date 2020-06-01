@@ -21,8 +21,6 @@ sip				IN	A	51.178.40.161
 _sip._udp		SRV	0	0	5060	sip
 _sip._tcp		SRV 0	0	5060	sip
 
-; mail services 
-
 mail		IN	A	51.178.40.161
 smtp		IN	CNAME	mail
 pop3		IN	CNAME	mail
