@@ -40,9 +40,9 @@ COPY templates/postfix/master.cf /etc/postfix/master.cf
 COPY templates/dovecot/dovecot.conf /etc/dovecot/dovecot.conf
 
 # Copy scripts
-COPY /scripts/docker_entryfile.sh /mail-server/scripts/
-COPY /scripts/configure.sh /mail-server/scripts/
-COPY /scripts/new_email.sh /mail-server/scripts/
+COPY scripts/docker_entryfile.sh /mail-server/scripts/
+COPY scripts/configure.sh /mail-server/scripts/
+COPY scripts/new_email.sh /mail-server/scripts/
 RUN chmod +x /mail-server/scripts/*
 
 # ENV variables
