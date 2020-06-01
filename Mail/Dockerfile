@@ -40,7 +40,7 @@ COPY templates/postfix/master.cf /etc/postfix/master.cf
 COPY templates/dovecot/dovecot.conf /etc/dovecot/dovecot.conf
 
 # Copy scripts
-COPY scripts/ /mail-server/scripts/
+COPY scripts/* /mail-server/scripts/
 RUN chmod +x /mail-server/scripts/*
 
 # ENV variables
