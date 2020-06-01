@@ -24,4 +24,4 @@ EXPOSE 80 443
 
 CMD apachectl -DFOREGROUND
 
-#sudo docker run -d --name web -h web-container --net=host artyomnegev/sysad2020_web:1.2
+#sudo docker run -d --name web -h web-container --net=host artyomnegev/sysad2020_web:1.3
