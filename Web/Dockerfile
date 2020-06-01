@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 RUN apt update && apt upgrade -y && DEBIAN_FRONTEND=noninteractive apt install -y apache2 php php-mysql nano 
 RUN a2enmod ssl
-RUN apt install software-properties-common -y && add-apt-repository ppa:certbot/certbot -y && apt update && apt install certbot -y
+#RUN apt install software-properties-common -y && add-apt-repository ppa:certbot/certbot -y && apt update && apt install certbot -y
 
 COPY wt1-3.ephec-ti.be.conf /etc/apache2/sites-available
 COPY b2b.wt1-3.ephec-ti.be.conf /etc/apache2/sites-available
