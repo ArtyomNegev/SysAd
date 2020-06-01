@@ -4,28 +4,28 @@ FROM debian:stretch
 RUN apt-get update && apt-get upgrade -y
 
 # Requirements
-RUN apt-get install postfix -y && \
-    apt-get install dovecot-core dovecot-imapd dovecot-pop3d -y && \
-    apt-get install libsasl2-2 libsasl2-modules sasl2-bin -y && \
-    apt-get install rsyslog mailutils -y
+RUN apt-get install postfix -y 
+RUN apt-get install dovecot-core dovecot-imapd dovecot-pop3d -y 
+RUN apt-get install libsasl2-2 libsasl2-modules sasl2-bin -y 
+RUN apt-get install rsyslog mailutils -y
 
 # Configuring postfix user
-RUN groupadd -g 5000 vmail && \
-    useradd -s /usr/sbin/nologin -u 5000 -g 5000 vmail && \
-    usermod -aG vmail postfix && \
-    usermod -aG vmail dovecot
+RUN groupadd -g 5000 vmail 
+RUN useradd -s /usr/sbin/nologin -u 5000 -g 5000 vmail 
+RUN usermod -aG vmail postfix 
+RUN usermod -aG vmail dovecot
 
 # Create directories and files
-RUN mkdir /etc/dovecot/ssl && \
-    mkdir /mail-server && \
-    mkdir /mail-server/scripts && \
-    touch /var/log/dovecot && \
-    chgrp vmail /var/log/dovecot && \
-    chmod 660 /var/log/dovecot && \
-    touch /etc/postfix/virtual_mailbox && \
-    touch /etc/postfix/virtual_domains && \
-    touch /etc/postfix/virtual_mailbox && \
-    touch /etc/postfix/virtual_alias
+RUN mkdir /etc/dovecot/ssl 
+RUN mkdir /mail-server 
+RUN mkdir /mail-server/scripts 
+RUN touch /var/log/dovecot 
+RUN chgrp vmail /var/log/dovecot
+RUN chmod 660 /var/log/dovecot 
+RUN touch /etc/postfix/virtual_mailbox 
+RUN touch /etc/postfix/virtual_domains 
+RUN touch /etc/postfix/virtual_mailbox 
+RUN touch /etc/postfix/virtual_alias
 
 WORKDIR /etc/dovecot/ssl
 RUN openssl req -new -outform PEM -out smtpd.cert -newkey rsa:2048 -nodes \
