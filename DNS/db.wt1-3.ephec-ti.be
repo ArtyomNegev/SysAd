@@ -8,8 +8,10 @@ wt1-3.ephec-ti.be.	IN	SOA	ns.wt1-3.ephec-ti.be. HE201639@students.ephec.be. (
 			86400		; Expire
 			 600 )	; Negative Cache TTL
 
-@	 IN	 NS 	ns
-	IN 	A	 51.178.40.161
+@	IN	 NS	 ns
+	IN	 A	 51.178.40.161
+@       IN       MX      10  mail
+
 wt1-3.ephec-ti.be.      IN      NS      ns.wt1-3.ephec-ti.be.
 ns.wt1-3.ephec-ti.be.   IN      A   51.178.40.161
 www.wt1-3.ephec-ti.be.  IN      A   51.178.40.161
@@ -18,3 +20,11 @@ intranet.wt1-3.ephec-ti.be.  IN      A   51.178.40.161
 sip				IN	A	51.178.40.161
 _sip._udp		SRV	0	0	5060	sip
 _sip._tcp		SRV 0	0	5060	sip
+
+; mail services 
+
+mail		IN	A	51.178.40.161
+smtp		IN	CNAME	mail
+pop3		IN	CNAME	mail
+imap		IN	CNAME	mail
+

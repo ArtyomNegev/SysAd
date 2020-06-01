@@ -3,11 +3,11 @@ biff = no
 append_dot_mydomain = no
 recipient_delimiter = +
 readme_directory = no
-myhostname = wt1.ephec-ti.be
-mydomain = wt1.ephec-ti.be
+myhostname = 
+mydomain = wt1-3.ephec-ti.be
 myorigin = $mydomain
 inet_interfaces = all
-mydestination = $myhostname, wt1.ephec-ti.be, vps797952.ovh.net, localhost.ovh.net, localhost
+mydestination = localhost
 mynetworks = 127.0.0.0/8
 
 virtual_mailbox_domains = /etc/postfix/virtual_domains
