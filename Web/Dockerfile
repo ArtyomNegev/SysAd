@@ -1,6 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt update && apt upgrade -y && DEBIAN_FRONTEND=noninteractive apt install -y apache2 php php-mysql nano 
+RUN a2enmod ssl
 
 COPY wt1-3.ephec-ti.be.conf /etc/apache2/sites-available
 COPY b2b.wt1-3.ephec-ti.be.conf /etc/apache2/sites-available
@@ -18,7 +19,7 @@ COPY WT_Public/WT_Public.html /var/www/wt1-3.ephec-ti.be/index.html
 COPY WT_B2B/WT_B2B.html /var/www/b2b.wt1-3.ephec-ti.be/index.html
 COPY WT_Intranet/WT_Intranet.html /var/www/intranet.wt1-3.ephec-ti.be/index.html
 
-EXPOSE 80
+EXPOSE 80 443
 
 CMD apachectl -DFOREGROUND
 
