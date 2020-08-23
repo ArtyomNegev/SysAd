@@ -10,6 +10,7 @@ berger.ephec-ti.be.	IN	SOA	ns.berger.ephec-ti.be. HE201639@students.ephec.be. (
 
 @	IN	 NS	 ns
 	IN	 A	 51.178.40.161
+@       IN       MX      10  mail
 
 berger.ephec-ti.be.      IN      NS      ns.berger.ephec-ti.be.
 ns.berger.ephec-ti.be.   IN      A   51.178.40.161
@@ -19,8 +20,9 @@ intranet.berger.ephec-ti.be.  IN      A   51.178.40.161
 sip				IN	A	51.178.40.161
 _sip._udp		SRV	0	0	5060	sip
 _sip._tcp		SRV 0	0	5060	sip
+
 mail		IN	A	51.178.40.161
 smtp		IN	CNAME	mail
 pop3		IN	CNAME	mail
 imap		IN	CNAME	mail
-berger.ephec-ti.be.       IN      MX      10 mail.berger.ephec-ti.be.
+
