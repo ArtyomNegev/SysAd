@@ -14,9 +14,6 @@ RUN useradd -s /usr/sbin/nologin -u 3109 -g 3109 groupmail
 RUN usermod -aG groupmail postfix 
 RUN usermod -aG groupmail dovecot
 
-RUN adduser romain
-RUN adduser secretaire
-
 # Copie des fichiers de configuration
 COPY Postfix/main /etc/postfix/main
 COPY Postfix/virtual /etc/postfix/virtual
