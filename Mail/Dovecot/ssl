@@ -1,0 +1,15 @@
+# SSL/TLS support: yes, no, required. <doc/wiki/SSL.txt>
+ssl = yes
+
+# PEM encoded X.509 SSL/TLS certificate and private key. They're opened before
+# dropping root privileges, so keep the key file unreadable by anyone but
+# root. Included doc/mkcert.sh can be used to easily generate self-signed
+# certificate, just make sure to update the domains in dovecot-openssl.cnf
+ssl_cert = </etc/dovecot/private/dovecot.pem
+ssl_key = </etc/dovecot/private/dovecot.key
+
+# Directory and/or file for trusted SSL CA certificates. These are used only
+# when Dovecot needs to act as an SSL client (e.g. imapc backend). The
+# directory is usually /etc/ssl/certs in Debian-based systems and the file is
+# /etc/pki/tls/cert.pem in RedHat-based systems.
+ssl_client_ca_dir = /etc/ssl/certs

@@ -1,0 +1,239 @@
+# COMPATIBILITY
+#
+# The compatibility_level determines what default settings Postfix
+# will use for main.cf and master.cf settings. These defaults will
+# change over time.
+#
+# To avoid breaking things, Postfix will use backwards-compatible
+# default settings and log where it uses those old backwards-compatible
+# default settings, until the system administrator has determined
+# if any backwards-compatible default settings need to be made
+# permanent in main.cf or master.cf.
+#
+# When this review is complete, update the compatibility_level setting
+# below as recommended in the RELEASE_NOTES file.
+#
+# The level below is what should be used with new (not upgrade) installs.
+compatibility_level = 2
+
+# INTERNET HOST AND DOMAIN NAMES
+#
+# The myhostname parameter specifies the internet hostname of this
+# mail system. The default is to use the fully-qualified domain name
+# from gethostname(). $myhostname is used as a default value for many
+# other configuration parameters.
+#
+#myhostname = host.domain.tld
+#myhostname = virtual.domain.tld
+myhostname = mail.wt1-3.ephec-ti.be
+
+# The mydomain parameter specifies the local internet domain name.
+# The default is to use $myhostname minus the first component.
+# $mydomain is used as a default value for many other configuration
+# parameters.
+#
+mydomain = wt1-3.ephec-ti.be
+
+# SENDING MAIL
+#
+# The myorigin parameter specifies the domain that locally-posted
+# mail appears to come from. The default is to append $myhostname,
+# which is fine for small sites.  If you run a domain with multiple
+# machines, you should (1) change this to $mydomain and (2) set up
+# a domain-wide alias database that aliases each user to
+# user@that.users.mailhost.
+#
+# For the sake of consistency between sender and recipient addresses,
+# myorigin also specifies the default domain name that is appended
+# to recipient addresses that have no @domain part.
+#
+# Debian GNU/Linux specific:  Specifying a file name will cause the
+# first line of that file to be used as the name.  The Debian default
+# is /etc/mailname.
+#
+#myorigin = /etc/mailname
+#myorigin = $myhostname
+myorigin = $mydomain
+
+# RECEIVING MAIL
+
+# The inet_interfaces parameter specifies the network interface
+# addresses that this mail system receives mail on.  By default,
+# the software claims all active interfaces on the machine. The
+# parameter also controls delivery of mail to user@[ip.address].
+#
+# See also the proxy_interfaces parameter, for network addresses that
+# are forwarded to us via a proxy or network address translator.
+#
+# Note: you need to stop/start Postfix when this parameter changes.
+#
+inet_interfaces = all
+#inet_interfaces = $myhostname
+#inet_interfaces = $myhostname, localhost
+
+# The mydestination parameter specifies the list of domains that this
+# machine considers itself the final destination for.
+#
+# These domains are routed to the delivery agent specified with the
+# local_transport parameter setting. By default, that is the UNIX
+# compatible delivery agent that lookups all recipients in /etc/passwd
+# and /etc/aliases or their equivalent.
+#
+# The default is $myhostname + localhost.$mydomain + localhost.  On
+# a mail domain gateway, you should also include $mydomain.
+#
+# Do not specify the names of virtual domains - those domains are
+# specified elsewhere (see VIRTUAL_README).
+#
+# Do not specify the names of domains that this machine is backup MX
+# host for. Specify those names via the relay_domains settings for
+# the SMTP server, or use permit_mx_backup if you are lazy (see
+# STANDARD_CONFIGURATION_README).
+#
+# The local machine is always the final destination for mail addressed
+# to user@[the.net.work.address] of an interface that the mail system
+# receives mail on (see the inet_interfaces parameter).
+#
+# Specify a list of host or domain names, /file/name or type:table
+# patterns, separated by commas and/or whitespace. A /file/name
+# pattern is replaced by its contents; a type:table is matched when
+# a name matches a lookup key (the right-hand side is ignored).
+# Continue long lines by starting the next line with whitespace.
+#
+# See also below, section "REJECTING MAIL FOR UNKNOWN LOCAL USERS".
+#
+#mydestination = $myhostname, localhost.$mydomain, localhost
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+#mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain,
+#       mail.$mydomain, www.$mydomain, ftp.$mydomain
+
+# Alternatively, you can specify the mynetworks list by hand, in
+# which case Postfix ignores the mynetworks_style setting.
+#
+# Specify an explicit list of network/netmask patterns, where the
+# mask specifies the number of bits in the network part of a host
+# address.
+#
+# You can also specify the absolute pathname of a pattern file instead
+# of listing the patterns here. Specify type:table for table-based lookups
+# (the value on the table right-hand side is not used).
+#
+#mynetworks = 168.100.189.0/28, 127.0.0.0/8
+#mynetworks = $config_directory/mynetworks
+#mynetworks = hash:/etc/postfix/network_table
+mynetworks = 127.0.0.0/8
+
+# The relayhost parameter specifies the default host to send mail to
+# when no entry is matched in the optional transport(5) table. When
+# no relayhost is given, mail is routed directly to the destination.
+#
+# On an intranet, specify the organizational domain name. If your
+# internal DNS uses no MX records, specify the name of the intranet
+# gateway host instead.
+#
+# In the case of SMTP, specify a domain, host, host:port, [host]:port,
+# [address] or [address]:port; the form [host] turns off MX lookups.
+#
+# If you're connected via UUCP, see also the default_transport parameter.
+#
+#relayhost = $mydomain
+#relayhost = [gateway.my.domain]
+#relayhost = [mailserver.isp.tld]
+#relayhost = uucphost
+#relayhost = [an.ip.add.ress]
+relayhost = 
+
+# ALIAS DATABASE
+#
+# The alias_maps parameter specifies the list of alias databases used
+# by the local delivery agent. The default list is system dependent.
+#
+# On systems with NIS, the default is to search the local alias
+# database, then the NIS alias database. See aliases(5) for syntax
+# details.
+#
+# If you change the alias database, run "postalias /etc/aliases" (or
+# wherever your system stores the mail alias file), or simply run
+# "newaliases" to build the necessary DBM or DB file.
+#
+# It will take a minute or so before changes become visible.  Use
+# "postfix reload" to eliminate the delay.
+#
+#alias_maps = dbm:/etc/aliases
+#alias_maps = hash:/etc/aliases
+#alias_maps = hash:/etc/aliases, nis:mail.aliases
+#alias_maps = netinfo:/aliases
+alias_maps = hash:/etc/aliases
+
+# The alias_database parameter specifies the alias database(s) that
+# are built with "newaliases" or "sendmail -bi".  This is a separate
+# configuration parameter, because alias_maps (see above) may specify
+# tables that are not necessarily all under control by Postfix.
+#
+#alias_database = dbm:/etc/aliases
+#alias_database = dbm:/etc/mail/aliases
+#alias_database = hash:/etc/aliases
+#alias_database = hash:/etc/aliases, hash:/opt/majordomo/aliases
+alias_database = hash:/etc/aliases
+
+# ADDRESS EXTENSIONS (e.g., user+foo)
+#
+# The recipient_delimiter parameter specifies the separator between
+# user names and address extensions (user+foo). See canonical(5),
+# local(8), relocated(5) and virtual(5) for the effects this has on
+# aliases, canonical, virtual, relocated and .forward file lookups.
+# Basically, the software tries user+foo and .forward+foo before
+# trying user and .forward.
+#
+recipient_delimiter = +
+
+# DELIVERY TO MAILBOX
+#
+# The home_mailbox parameter specifies the optional pathname of a
+# mailbox file relative to a user's home directory. The default
+# mailbox file is /var/spool/mail/user or /var/mail/user.  Specify
+# "Maildir/" for qmail-style delivery (the / is required).
+#
+#home_mailbox = Mailbox
+home_mailbox = Maildir/
+
+# SHOW SOFTWARE VERSION OR NOT
+#
+# The smtpd_banner parameter specifies the text that follows the 220
+# code in the SMTP server's greeting banner. Some people like to see
+# the mail version advertised. By default, Postfix shows no version.
+#
+# You MUST specify $myhostname at the start of the text. That is an
+# RFC requirement. Postfix itself does not care.
+#
+#smtpd_banner = $myhostname ESMTP $mail_name
+#smtpd_banner = $myhostname ESMTP $mail_name ($mail_version)
+smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+
+# readme_directory: The location of the Postfix README files.
+readme_directory = no
+inet_protocols = all
+
+# TLS parameters
+# See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
+# information on enabling SSL in the smtp client.
+smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+smtpd_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+
+#Whether or not to use the local biff service. 
+#This service sends "new mail" notifications to users who have requested new mail notification.
+#For compatibility reasons this feature is on by default. 
+#On systems with lots of interactive users, the biff service can be a performance drain.
+biff = no
+
+# appending .domain is the MUA's job.
+append_dot_mydomain = no
+
+mailbox_size_limit = 0
+
+virtual_alias_domains = wt1-3.ephec-ti.be
+virtual_alias_maps = hash:/etc/postfix/virtual

@@ -1,63 +1,39 @@
-FROM debian:stretch
+FROM ubuntu:latest
 
-# Installation
+# Mise à jour systèmesystemd
 RUN apt-get update && apt-get upgrade -y
 
-# Requirements
+# Installation des packages
 RUN apt-get install postfix -y 
-RUN apt-get install dovecot-core dovecot-imapd dovecot-pop3d -y 
-RUN apt-get install libsasl2-2 libsasl2-modules sasl2-bin -y 
-RUN apt-get install rsyslog mailutils -y
+RUN apt-get install dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd -y 
+RUN apt-get install nfs-common nano rsyslog mailutils systemd net-tools telnet -y 
 
-# Configuring postfix user
-RUN groupadd -g 5000 vmail 
-RUN useradd -s /usr/sbin/nologin -u 5000 -g 5000 vmail 
-RUN usermod -aG vmail postfix 
-RUN usermod -aG vmail dovecot
+# Configuration des utilisateurs postfix
+RUN groupadd -g 3109 groupmail 
+RUN useradd -s /usr/sbin/nologin -u 3109 -g 3109 groupmail 
+RUN usermod -aG groupmail postfix 
+RUN usermod -aG groupmail dovecot
 
-# Create directories and files
-RUN mkdir /etc/dovecot/ssl 
-RUN mkdir /mail-server 
-RUN mkdir /mail-server/scripts 
-RUN touch /var/log/dovecot 
-RUN chgrp vmail /var/log/dovecot
-RUN chmod 660 /var/log/dovecot 
-RUN touch /etc/postfix/virtual_mailbox 
-RUN touch /etc/postfix/virtual_domains 
-RUN touch /etc/postfix/virtual_mailbox 
-RUN touch /etc/postfix/virtual_alias
+# Copie des fichiers de configuration
+COPY Postfix/main /etc/postfix/main
+COPY Postfix/virtual /etc/postfix/virtual
+COPY Dovecot/conf /etc/dovecot/conf
+COPY Dovecot/auth /etc/dovecot/conf.d/auth
+COPY Dovecot/mail /etc/dovecot/conf.d/mail
+COPY Dovecot/master /etc/dovecot/conf.d/master
+COPY Dovecot/ssl /etc/dovecot/conf.d/ssl
 
-WORKDIR /etc/dovecot/ssl
-RUN openssl req -new -outform PEM -out smtpd.cert -newkey rsa:2048 -nodes \
-  -keyout smtpd.key -keyform PEM -days 365 -x509 \
-  -subj "/C=BE/ST=Wavre/L=Wavre/O=WoodyToys/OU=IT Department/CN=wt1-3.ephec-ti.be"  
-  
-  
- 
-# Copy templates
-COPY templates/postfix/main.cf /etc/postfix/main.cf
-COPY templates/postfix/master.cf /etc/postfix/master.cf
-COPY templates/dovecot/dovecot.conf /etc/dovecot/dovecot.conf
+RUN cat /etc/dovecot/conf > /etc/dovecot/dovecot.conf
+RUN cat /etc/dovecot/conf.d/auth > /etc/dovecot/conf.d/10-auth.conf
+RUN cat /etc/dovecot/conf.d/ssl > /etc/dovecot/conf.d/10-ssl.conf
+RUN cat /etc/dovecot/conf.d/master > /etc/dovecot/conf.d/10-master.conf
+RUN cat /etc/dovecot/conf.d/mail > /etc/dovecot/conf.d/10-mail.conf
+RUN cat /etc/postfix/main > /etc/postfix/main.cf
+RUN cd /etc/postfix
+RUN postmap /etc/postfix/virtual
 
-# Copy scripts
-COPY scripts/docker_entryfile.sh /mail-server/scripts/
-COPY scripts/configure.sh /mail-server/scripts/
-COPY scripts/new_email.sh /mail-server/scripts/
-RUN chmod +x /mail-server/scripts/*
+# Exposition des ports
+EXPOSE 25 110 143 587
 
-# ENV variables
-ENV DOMAIN ""
-ENV USERNAME ""
-ENV PASSWORD ""
-
-# Volumes for configuration
-VOLUME /var/spool/mail/vhosts
-
-RUN chmod u+rwx,g+rwx-w,o+rwx /var/spool/mail/vhosts
-
-# Expose volumes
-EXPOSE 25
-EXPOSE 143
-
-# Launching command
-CMD /mail-server/scripts/docker_entryfile.sh
+# Commandes
+CMD /etc/init.d/dovecot start
