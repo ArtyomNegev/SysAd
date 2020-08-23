@@ -1,0 +1,25 @@
+//access control list : définit des groupes d'hôtes qui sont autorisés à accéder au DNS.
+acl ip_interne { 
+	localhost;
+	51.178.40.161;
+};
+
+//Reseau interne
+view internal {
+	match-clients { ip_interne; };
+	recursion yes;
+	allow-recursion { ip_interne; };
+	zone "berger.ephec-ti.be" {
+		type master;
+		file "/etc/bind/db.internal.berger.ephec-ti.be";
+	};
+};
+
+//Reseau externe
+view external {
+	match-clients { any; };
+	zone "berger.ephec-ti.be" {
+		type master;
+		file "/etc/bind/db.berger.ephec-ti.be";
+	};
+};

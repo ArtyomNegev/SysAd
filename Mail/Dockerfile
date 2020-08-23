@@ -14,6 +14,9 @@ RUN useradd -s /usr/sbin/nologin -u 3109 -g 3109 groupmail
 RUN usermod -aG groupmail postfix 
 RUN usermod -aG groupmail dovecot
 
+RUN adduser Romain
+RUN adduser Secretaire
+
 # Copie des fichiers de configuration
 COPY Postfix/main /etc/postfix/main
 COPY Postfix/virtual /etc/postfix/virtual
@@ -36,4 +39,5 @@ RUN postmap /etc/postfix/virtual
 EXPOSE 25 110 143 587
 
 # Commandes
+#CMD ["service dovecot restart && service postfix restart"]
 CMD /etc/init.d/dovecot start
