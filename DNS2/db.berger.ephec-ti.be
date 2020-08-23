@@ -5,11 +5,12 @@ berger.ephec-ti.be.	IN	SOA	ns.berger.ephec-ti.be. HE201639@students.ephec.be. (
 		         2019031001	; Serial
 			 3600		; Refresh
 			  600		; Retry
-			86400		; Expire
+			1209600		; Expire
 			 600 )	; Negative Cache TTL
 
 @	IN	 NS	 ns
 	IN	 A	 51.178.40.161
+	IN  TXT     "v=spf1 include:mail.berger.ephec-ti.be ip4:51.178.40.161 -all"
 @       IN       MX      10  mail
 
 berger.ephec-ti.be.      IN      NS      ns.berger.ephec-ti.be.
