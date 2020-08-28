@@ -1,7 +1,8 @@
 FROM ubuntu:latest
 
-RUN apt update && apt upgrade -y && DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 php php-mysql nano wget unzip
+RUN apt update && apt upgrade -y && DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 php php-mysql nano wget unzip dovecot-imapd dovecot-pop3d
 RUN a2enmod ssl
+RUN service dovecot restart
 
 COPY berger.ephec-ti.be.conf /etc/apache2/sites-available
 COPY b2b.berger.ephec-ti.be.conf /etc/apache2/sites-available
@@ -31,6 +32,8 @@ COPY Mail/config.php /var/www/html/mail/config
 RUN mkdir /var/local/mail
 RUN mkdir /var/local/mail/data/
 RUN chmod 777 /var/local/mail/data/
+RUN rm squirrelmail-webmail-1.4.22.zip
+RUN cd /
 
 EXPOSE 80 443
 
